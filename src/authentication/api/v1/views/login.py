@@ -1,10 +1,9 @@
 from django.db import transaction
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.decorators import method_decorator
-from rest_framework import generics
-from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from ..serializers.login import LoginSerializer
+from shared.mixins.view_mixins import CustomCreateAPIView
 
 @method_decorator(
     decorator=sensitive_post_parameters('password'),
@@ -22,14 +21,9 @@ from ..serializers.login import LoginSerializer
     decorator=transaction.atomic(),
     name='post'
 )
-class LoginView(generics.CreateAPIView):
+class LoginView(CustomCreateAPIView):
     """
     API to login user with email or username
     """
     queryset = None
     serializer_class = LoginSerializer
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        response.status_code = status.HTTP_200_OK
-        return response

@@ -31,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin, AbstractTimestampMixin, AbstractS
     )
     first_name = models.CharField(verbose_name=_('first name'), max_length=150)
     last_name = models.CharField(verbose_name=_('last name'), max_length=150)
-    profile_image = models.ImageField(verbose_name=_('profile image'), null=True, blank=True)
+    profile_image = models.ImageField(verbose_name=_('profile image'), upload_to='users/',null=True, blank=True)
     email = models.EmailField(
         verbose_name=_('email address'),
         unique=True,

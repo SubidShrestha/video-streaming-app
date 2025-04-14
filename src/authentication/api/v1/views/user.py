@@ -2,10 +2,10 @@ from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import generics
-from rest_framework import status
 from rest_framework import permissions
 from drf_spectacular.utils import extend_schema
 from ..serializers.user import UserSerializer, LogoutSerializer, ChangePasswordSerializer
+from shared.mixins.view_mixins import CustomCreateAPIView
 
 @method_decorator(
     decorator=extend_schema(
@@ -65,15 +65,11 @@ class UserView(generics.RetrieveUpdateAPIView):
     decorator=transaction.atomic(),
     name='post'
 )
-class LogoutView(generics.CreateAPIView):
+class LogoutView(CustomCreateAPIView):
     queryset = None
     serializer_class = LogoutSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        response.status_code = status.HTTP_200_OK
-        return response
 
 @method_decorator(
     decorator=sensitive_post_parameters('old_password', 'new_password1', 'new_password2'),
@@ -91,12 +87,7 @@ class LogoutView(generics.CreateAPIView):
     decorator=transaction.atomic(),
     name='post'
 )
-class ChangePasswordView(generics.CreateAPIView):
+class ChangePasswordView(CustomCreateAPIView):
     queryset = None
     serializer_class = ChangePasswordSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        response.status_code = status.HTTP_200_OK
-        return response
