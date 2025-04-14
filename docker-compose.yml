@@ -1,0 +1,54 @@
+services:
+  video-stream-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video-stream-api
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+    env_file:
+      - ./src/.env
+    depends_on:
+      video-stream-db:
+        condition: service_healthy
+      video-stream-redis:
+        condition: service_healthy
+    entrypoint: ["/entrypoint.sh"]
+
+  video-stream-db:
+    image: postgres:16
+    container_name: video-stream-db
+    restart: always
+    environment:
+      - POSTGRES_DB=${PG_DATABASE}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+    volumes:
+      - video_stream_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 2s
+
+  video-stream-redis:
+    image: redis:7
+    container_name: video-stream-redis
+    restart: always
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 2s
+
+volumes:
+  video_stream_postgres_data:
