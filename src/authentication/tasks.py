@@ -34,7 +34,7 @@ def send_reset_mail(pk: int) -> None:
         'reset_link': user.reset_password_link
     }
     html_message = template.render(context=context)
-    email_from = settings.EMAIL_HOST_USER
+    email_from = f"No Reply <{settings.EMAIL_HOST_USER}>"
     recipient_list = [user.email]
     msg = EmailMultiAlternatives(subject, html_message, email_from, recipient_list)
     msg.content_subtype = "html"

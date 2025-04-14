@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_spectacular',
     'authentication',
+    'content',
 ]
 
 MIDDLEWARE = [
@@ -156,7 +157,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -175,10 +175,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'EXCEPTION_HANDLER': 'shared.responses.exceptions.custom_exception_handler',
-    'DEFAULT_THROTTLE_RATES': {
-        'reset_request': '5/hour',
-        'reset_password': '3/hour',
-    },
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -260,3 +256,5 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5_242_880

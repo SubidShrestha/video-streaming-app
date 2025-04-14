@@ -335,17 +335,6 @@ offline = ["drf-spectacular-sidecar"]
 sidecar = ["drf-spectacular-sidecar"]
 
 [[package]]
-name = "ffmpeg"
-version = "1.4"
-description = "ffmpeg python package url [https://github.com/jiashaokun/ffmpeg]"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "ffmpeg-1.4.tar.gz", hash = "sha256:6931692c890ff21d39938433c2189747815dca0c60ddc7f9bb97f199dba0b5b9"},
-]
-
-[[package]]
 name = "gunicorn"
 version = "23.0.0"
 description = "WSGI HTTP Server for UNIX"
@@ -962,4 +951,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "56e994e81372af5c603556f10727f3f848d739a050cd8a02c1491c589ac3ecbb"
+content-hash = "e6ce54d84c2f2d95a274353e1482d08d225902c91355ac8e596d0fba0c72310f"

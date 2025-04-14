@@ -91,7 +91,7 @@ class User(AbstractBaseUser, PermissionsMixin, AbstractTimestampMixin, AbstractS
     def reset_password_link(self) -> str:
         reset_token = self.reset_token
         reset_url: str = settings.RESET_PASSWORD_URL
-        reset_url.rstrip('/')
+        reset_url = reset_url.rstrip("/")
         return f"{reset_url}/?token={reset_token}"
     
     @staticmethod
